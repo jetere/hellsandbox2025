@@ -159,7 +159,7 @@ public class CarController : MonoBehaviour
             
             else
             {
-                wheel.wheelEffectObj.GetComponentInChildren<TrailRenderer>().emitting = false;
+               wheel.wheelEffectObj.GetComponentInChildren<TrailRenderer>().emitting = false;
             }
         }
     }

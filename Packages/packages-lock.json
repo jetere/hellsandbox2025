@@ -1,7 +1,14 @@
 {
   "dependencies": {
-<<<<<<< HEAD
-=======
+    "com.unity.cinemachine": {
+      "version": "2.10.6",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.31"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.collab-proxy": {
       "version": "2.11.3",
       "depth": 0,
@@ -70,6 +77,15 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.14.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.performance.profile-analyzer": {
@@ -168,7 +184,6 @@
       },
       "url": "https://packages.unity.com"
     },
->>>>>>> a75b684f4aaafa86b646c81214fe2abd71e7e18b
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
