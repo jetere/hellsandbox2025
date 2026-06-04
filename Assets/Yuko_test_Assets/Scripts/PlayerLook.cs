@@ -11,6 +11,7 @@ using UnityEngine;
 /// Input sources (all via shared PlayerControls asset):
 ///   PC      — Mouse delta
 ///   Gamepad — Right stick  (also works with On Screen Stick bound to <Gamepad>/rightStick)
+///   Mobile  — Right-half finger drag (touch delta, resolution-independent)
 /// </summary>
 public class PlayerLook : MonoBehaviour
 {
@@ -21,8 +22,10 @@ public class PlayerLook : MonoBehaviour
     [Header("Sensitivity")]
     public float mouseSensitivityX = 0.2f;
     public float mouseSensitivityY = 0.2f;
-    public float stickSensitivityX = 120f;   // degrees per second at full deflection
+    public float stickSensitivityX = 120f;
     public float stickSensitivityY = 120f;
+    public float touchSensitivityX = 0.1f;   // tunable in Inspector
+    public float touchSensitivityY = 0.1f;
 
     [Header("Vertical Clamp")]
     public float minPitch = -25.0f;
@@ -39,6 +42,10 @@ public class PlayerLook : MonoBehaviour
     private float _yaw;
     private float _pitch = 10f;
 
+    // Touch look state
+    private int _lookTouchId = -1;
+    private Vector2 _lastTouchPos = Vector2.zero;
+
     // Shared Input Action Asset — same instance as PlayerMovement & AnimationController
     private PlayerControls playerControls;
     private PlayerControls.PlayerActions playerInput;
@@ -47,6 +54,7 @@ public class PlayerLook : MonoBehaviour
 
     void Awake()
     {
+        Input.multiTouchEnabled = true;         // allow joystick + look touch simultaneously
         playerControls = new PlayerControls();
         playerInput = playerControls.Player;
     }
@@ -56,7 +64,6 @@ public class PlayerLook : MonoBehaviour
 
     void Start()
     {
-        // Lock cursor on PC; on Android this has no effect
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -73,27 +80,68 @@ public class PlayerLook : MonoBehaviour
     }
 
     // ─────────────────────────────────────────────────────────────────────
-    // Look — Mouse delta (PC) + Right Stick / On Screen Stick (Android)
-    //
-    // On Android:
-    //   - Place a transparent UI Panel on the RIGHT half of the screen
-    //   - Add Unity's "On Screen Stick" component to it
-    //   - Set its Control Path to <Gamepad>/rightStick
-    //   This drives the stickDelta branch below automatically.
+    // Look — Mouse (PC) + Right Stick / On Screen Stick + Touch right half
     // ─────────────────────────────────────────────────────────────────────
     void HandleLook()
     {
-        // Mouse (PC only — returns zero on Android)
+        // ── Mouse (PC) ───────────────────────────────────────────────────
         Vector2 mouseDelta = playerInput.Look.ReadValue<Vector2>();
         _yaw += mouseDelta.x * mouseSensitivityX;
         _pitch -= mouseDelta.y * mouseSensitivityY;
 
-        // Right stick / On Screen Stick (Gamepad / Android)
+        // ── Right stick / On Screen Stick (Gamepad / Android) ────────────
         Vector2 stickDelta = playerInput.LookStick.ReadValue<Vector2>();
         _yaw += stickDelta.x * stickSensitivityX * Time.deltaTime;
         _pitch -= stickDelta.y * stickSensitivityY * Time.deltaTime;
 
+        // ── Touch drag on right half of screen (Mobile) ──────────────────
+        // Any finger that BEGAN on the right half is claimed as the look
+        // finger. Fingers that started on the left half (on-screen joystick)
+        // are ignored entirely — no bleed-over into camera movement.
+        Vector2 touchDelta = ReadTouchLookDelta();
+        _yaw += touchDelta.x * touchSensitivityX;
+        _pitch -= touchDelta.y * touchSensitivityY;
+
         _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────
+    // Returns pixel delta of the designated look finger this frame.
+    // Only a finger that STARTED on the right half can become look finger.
+    // ─────────────────────────────────────────────────────────────────────
+    Vector2 ReadTouchLookDelta()
+    {
+        float screenMidX = Screen.width * 0.5f;
+        Vector2 delta = Vector2.zero;
+
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Touch t = Input.GetTouch(i);
+
+            if (t.phase == TouchPhase.Began)
+            {
+                // Claim only right-half touches, and only if no look finger active yet
+                if (t.position.x > screenMidX && _lookTouchId == -1)
+                {
+                    _lookTouchId = t.fingerId;
+                    _lastTouchPos = t.position;
+                }
+            }
+            else if (t.fingerId == _lookTouchId)
+            {
+                if (t.phase == TouchPhase.Moved)
+                {
+                    delta = t.position - _lastTouchPos;
+                    _lastTouchPos = t.position;
+                }
+                else if (t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
+                {
+                    _lookTouchId = -1;
+                }
+            }
+        }
+
+        return delta;
     }
 
     // ─────────────────────────────────────────────────────────────────────

@@ -176,8 +176,8 @@
                 },
                 {
                     "name": "",
-                    "id": "968ecfd5-c9c1-4b4f-a918-277ec097e91e",
-                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "id": "be1b9969-20e0-474f-a48d-b73258b9cfb3",
+                    "path": "<Touchscreen>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

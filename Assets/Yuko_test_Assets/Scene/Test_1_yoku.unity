@@ -321,7 +321,7 @@ MonoBehaviour:
   m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
+  m_PointerBehavior: 2
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
 --- !u!1 &1952622932
@@ -544,9 +544,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1626124376}
     m_Modifications:
+    - target: {fileID: 922456713720061772, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1970206351448568379, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
       propertyPath: m_Name
       value: MobileUI_Simple
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603513196204327691, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_Name
+      value: JoyStick Background
       objectReference: {fileID: 0}
     - target: {fileID: 6166426934419928840, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
       propertyPath: m_Pivot.x
@@ -628,7 +636,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6988078406550245294, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012200150099508953, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_ControlPath
+      value: <Gamepad>/leftStick
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012200150099508953, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_UseIsolatedInputActions
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012200150099508953, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_PointerMoveAction.m_SingletonActionBindings.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012200150099508953, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_PointerMoveAction.m_SingletonActionBindings.Array.data[0].m_Id
+      value: 0b0cf471-b8ed-4c92-85d1-522cc49b06cf
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012200150099508953, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_PointerMoveAction.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Gamepad>/leftStick
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012200150099508953, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
+      propertyPath: m_PointerMoveAction.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Pointer Move
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5544616083113722565, guid: 56581832ee8d4934eb9d440172ab40ac, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -641,6 +678,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1164445061162747604, guid: dd10d0c7a3a0ad1448d7c555b77e1d6c, type: 3}
+      propertyPath: runSpeed
+      value: 4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164445061162747604, guid: dd10d0c7a3a0ad1448d7c555b77e1d6c, type: 3}
+      propertyPath: jumpForce
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1164445061162747604, guid: dd10d0c7a3a0ad1448d7c555b77e1d6c, type: 3}
       propertyPath: playerLook
       value: 

@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Yuko_test_Assets/Scene/Test_1_yoku.unity
+    guid: b262c548c1151a940bf407abab8cf7de
   m_configObjects: {}
